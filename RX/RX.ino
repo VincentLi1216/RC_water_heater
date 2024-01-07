@@ -22,12 +22,12 @@ void TX_init(){
   radio.stopListening();
 }
 
-int RX() {
+int RX(int duration = 10000) {
   RX_init();
 
   unsigned long previousMillis = millis();  // 初始化 previousMillis
 
-  while (millis() - previousMillis < 10000) { // 非阻塞循環
+  while (millis() - previousMillis < duration) { // 非阻塞循環
     if (radio.available()) {
       char text[32] = "";
       radio.read(&text, sizeof(text));
@@ -44,6 +44,16 @@ int RX() {
   }
 
   return -1;
+}
+
+void TX(char charToSend, int duration) {
+  TX_init();
+  
+  int times = duration / 100;
+  for (int i = 0; i < times; i++) {
+    radio.write(&charToSend, sizeof(charToSend));
+    delay(100);
+  }
 }
 
 void setup() {
