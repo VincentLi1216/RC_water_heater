@@ -10,11 +10,22 @@ const int BUTTON_PIN = 6;
 int buttonState = 0;
 int state = 0;
 
-int RX() {
+void RX_init(){
+  radio.begin();
+  radio.openReadingPipe(0, address);
+  radio.setPALevel(RF24_PA_MAX);
+  radio.startListening();
+}
+
+void TX_init(){
   radio.begin();
   radio.openWritingPipe(address);
   radio.setPALevel(RF24_PA_HIGH);
   radio.stopListening();
+}
+
+int RX() {
+  RX_init();
 
   unsigned long previousMillis = millis();  // 初始化 previousMillis
 
@@ -38,10 +49,7 @@ int RX() {
 }
 
 void setup() {
-  radio.begin();
-  radio.openWritingPipe(address);
-  radio.setPALevel(RF24_PA_HIGH);
-  radio.stopListening();
+  TX_init();
 
   pinMode(BUTTON_PIN, INPUT_PULLUP);
   pinMode(led_pin, OUTPUT);

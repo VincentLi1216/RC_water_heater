@@ -8,11 +8,22 @@ const byte address[6] = "00001";
 const int blue_led_pin = 7;
 const int buzzer_pin = 6;
 
-int RX() {
+void RX_init(){
   radio.begin();
   radio.openReadingPipe(0, address);
   radio.setPALevel(RF24_PA_MAX);
   radio.startListening();
+}
+
+void TX_init(){
+  radio.begin();
+  radio.openWritingPipe(address);
+  radio.setPALevel(RF24_PA_HIGH);
+  radio.stopListening();
+}
+
+int RX() {
+  RX_init();
 
   unsigned long previousMillis = millis();  // 初始化 previousMillis
 
@@ -36,10 +47,7 @@ int RX() {
 }
 
 void setup() {
-  radio.begin();
-  radio.openReadingPipe(0, address);
-  radio.setPALevel(RF24_PA_MAX);
-  radio.startListening();
+  RX_init();
 
   pinMode(blue_led_pin, OUTPUT);
   pinMode(buzzer_pin, OUTPUT);
@@ -48,31 +56,31 @@ void setup() {
 
   Serial.begin(9600);
   Serial.println("start!!!");
-  Serial.println(String(RX()));
+//  Serial.println(String(RX()));
 }
 
 
 
 void loop() {
-  //    if (radio.available()) {
-  //        char text[32] = "";
-  //        radio.read(&text, sizeof(text));
-  //
-  //        Serial.println(text);
-  //        if (strcmp(text, "1") == 0){
-  //          Serial.println("On");
-  //          digitalWrite(buzzer_pin, 1);
-  //          delay(200);
-  //          digitalWrite(buzzer_pin, 0);
-  //          digitalWrite(blue_led_pin,1);
-  //        }
-  //
-  //        if (strcmp(text, "0") == 0){
-  //          Serial.println("Off");
-  //          digitalWrite(buzzer_pin, 1);
-  //          delay(200);
-  //          digitalWrite(buzzer_pin, 0);
-  //          digitalWrite(blue_led_pin,0);
-  //        }
-  //    }
+      if (radio.available()) {
+          char text[32] = "";
+          radio.read(&text, sizeof(text));
+  
+          Serial.println(text);
+          if (strcmp(text, "1") == 0){
+            Serial.println("On");
+            digitalWrite(buzzer_pin, 1);
+            delay(200);
+            digitalWrite(buzzer_pin, 0);
+            digitalWrite(blue_led_pin,1);
+          }
+  
+          if (strcmp(text, "0") == 0){
+            Serial.println("Off");
+            digitalWrite(buzzer_pin, 1);
+            delay(200);
+            digitalWrite(buzzer_pin, 0);
+            digitalWrite(blue_led_pin,0);
+          }
+      }
 }
