@@ -18,7 +18,7 @@ int RX() {
 
   unsigned long previousMillis = millis();  // 初始化 previousMillis
 
-  while(millis() - previousMillis < 3000) {  // 1秒的非阻塞循環
+  while(millis() - previousMillis < 3000) {  // 非阻塞循環
     if (radio.available()) {
       char text[32] = "";
       radio.read(&text, sizeof(text));

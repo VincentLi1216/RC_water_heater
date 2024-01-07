@@ -26,17 +26,25 @@ void setup() {
     Serial.begin(9600);
 }
 
-void loop() {
-  if(state == 0){
-          const char text[] = "0";
-          state = 1;
-          radio.write(&text, sizeof(text));
-          delay(1000);
-        }else{
-          const char text[] = "1";
-          state = 0;
-          radio.write(&text, sizeof(text));
-          delay(1000);
-        }
-    
+//void loop() {
+//  if(state == 0){
+//          const char text[] = "0";
+//          state = 1;
+//          radio.write(&text, sizeof(text));
+//          delay(1000);
+//        }else{
+//          const char text[] = "1";
+//          state = 0;
+//          radio.write(&text, sizeof(text));
+//          delay(1000);
+//        }
+//    
+//}
+
+// testing
+
+void loop(){
+  const char text[] = "1";
+  radio.write(&text, sizeof(text));
+  delay(100);
 }
