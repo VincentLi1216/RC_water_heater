@@ -10,14 +10,14 @@ const int BUTTON_PIN = 6;
 int buttonState = 0;
 int state = 0;
 
-void RX_init(){
+void RX_init() {
   radio.begin();
   radio.openReadingPipe(0, address);
   radio.setPALevel(RF24_PA_MAX);
   radio.startListening();
 }
 
-void TX_init(){
+void TX_init() {
   radio.begin();
   radio.openWritingPipe(address);
   radio.setPALevel(RF24_PA_HIGH);
@@ -48,14 +48,20 @@ int RX(int duration = 10000) {
   return -1;
 }
 
-void TX(char charToSend, int duration, int delay_time = 500) {
+void TX(char charToSend, int duration, int delay_time = 100) {
   TX_init();
-  
+
   int times = duration / delay_time;
+  Serial.print("sending: \"");
+  Serial.print(charToSend);
+  Serial.print("\" (");
+  Serial.print(String(times));
+  Serial.print(" times, delay ");
+  Serial.print(String(delay_time));
+  Serial.println("ms)");
   for (int i = 0; i < times; i++) {
     radio.write(&charToSend, sizeof(charToSend));
-    Serial.println("sending: ");
-    Serial.println(charToSend);
+
     delay(delay_time);
   }
 }
@@ -82,9 +88,9 @@ void loop() {
       state = 1;
       Serial.print("Messege sent: ");
       Serial.println(text);
-      TX(text[0],500); //send mes
-      
-      
+      TX(text[0], 3000); //send mes
+
+
       Serial.println(RX(500)); //receive ACK
       TX_init();
     } else {
@@ -92,10 +98,10 @@ void loop() {
       state = 0;
       Serial.print("Messege sent: ");
       Serial.println(text);
-      TX(text[0],500); //send mes
+      TX(text[0], 3000); //send mes
       //radio.write(&text, sizeof(text));
-      
-      
+
+
       Serial.println(RX(500));//receive ACK
       TX_init();
     }
