@@ -48,13 +48,15 @@ int RX(int duration = 10000) {
   return -1;
 }
 
-void TX(char charToSend, int duration) {
+void TX(char charToSend, int duration, int delay_time = 500) {
   TX_init();
   
-  int times = duration / 100;
+  int times = duration / delay_time;
   for (int i = 0; i < times; i++) {
     radio.write(&charToSend, sizeof(charToSend));
-    delay(100);
+    Serial.println("sending: ");
+    Serial.println(charToSend);
+    delay(delay_time);
   }
 }
 
@@ -78,20 +80,23 @@ void loop() {
     if (state == 0) {
       const char text[] = "0";
       state = 1;
-      radio.write(&text, sizeof(text));
       Serial.print("Messege sent: ");
-      Serial.println("0");
+      Serial.println(text);
+      TX(text[0],500); //send mes
       
-      Serial.println(RX()); //send ACK
+      
+      Serial.println(RX(500)); //receive ACK
       TX_init();
     } else {
       const char text[] = "1";
       state = 0;
-      radio.write(&text, sizeof(text));
       Serial.print("Messege sent: ");
-      Serial.println("1");
+      Serial.println(text);
+      TX(text[0],500); //send mes
+      //radio.write(&text, sizeof(text));
       
-      Serial.println(RX());//send ACK
+      
+      Serial.println(RX(500));//receive ACK
       TX_init();
     }
 
