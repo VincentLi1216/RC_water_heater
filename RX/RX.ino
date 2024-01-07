@@ -65,7 +65,7 @@ void setup() {
   digitalWrite(buzzer_pin, 0);
 
   Serial.begin(9600);
-  Serial.println("start!!!");
+  Serial.println("-----Start RX Service-----");
 //  Serial.println(String(RX()));
 }
 

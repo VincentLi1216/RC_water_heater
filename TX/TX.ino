@@ -68,6 +68,7 @@ void setup() {
   digitalWrite(led_pin, 0);
 
   Serial.begin(9600);
+  Serial.println("-----Start TX Service-----");
 }
 
 void loop() {
@@ -78,12 +79,20 @@ void loop() {
       const char text[] = "0";
       state = 1;
       radio.write(&text, sizeof(text));
-      delay(500);
+      Serial.print("Messege sent: ");
+      Serial.println("0");
+      
+      Serial.println(RX()); //send ACK
+      TX_init();
     } else {
       const char text[] = "1";
       state = 0;
       radio.write(&text, sizeof(text));
-      delay(500);
+      Serial.print("Messege sent: ");
+      Serial.println("1");
+      
+      Serial.println(RX());//send ACK
+      TX_init();
     }
 
   }
