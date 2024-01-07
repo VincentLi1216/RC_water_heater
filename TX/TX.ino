@@ -35,13 +35,14 @@ int RX(int duration = 10000) {
       radio.read(&text, sizeof(text));
 
       //Serial.println(text);
-      if (strcmp(text, "1") == 0) {
-        return 1;
+      if (strcmp(text, "2") == 0) {
+        return 2;
       }
 
-      if (strcmp(text, "0") == 0) {
-        return 0;
+      if (strcmp(text, "3") == 0) {
+        return 3;
       }
+
     }
   }
 
