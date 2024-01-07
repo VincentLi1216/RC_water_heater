@@ -53,7 +53,7 @@ void TX(char charToSend, int duration, int delay_time = 100) {
   TX_init();
 
   int times = duration / delay_time;
-  Serial.print("sending: \"");
+  Serial.print("Sending: \"");
   Serial.print(charToSend);
   Serial.print("\" (");
   Serial.print(String(times));
@@ -91,8 +91,15 @@ void loop() {
       Serial.println(text);
       TX(text[0], 3000); //send mes
 
-
-      Serial.println(RX(500)); //receive ACK
+      int ACK = RX(500);
+      Serial.print("ACK: ");
+      Serial.println(ACK); //receive ACK
+      if(ACK==2){
+        Serial.println("Satus: Successful");
+      }else{
+        Serial.println("Satus: Failed");
+      }
+      Serial.println();
       TX_init();
     } else {
       const char text[] = "1";
@@ -102,8 +109,15 @@ void loop() {
       TX(text[0], 3000); //send mes
       //radio.write(&text, sizeof(text));
 
-
-      Serial.println(RX(500));//receive ACK
+      int ACK = RX(500);
+      Serial.print("ACK: ");
+      Serial.println(ACK); //receive ACK
+      if(ACK==3){
+        Serial.println("Satus: Successful");
+      }else{
+        Serial.println("Satus: Failed");
+      }
+      Serial.println();
       TX_init();
     }
 

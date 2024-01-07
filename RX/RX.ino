@@ -94,7 +94,7 @@ void loop() {
       digitalWrite(buzzer_pin, 0);
       digitalWrite(blue_led_pin, 0);
       const char text[] = "2";
-      TX(text[0], 10000); //send ACK
+      TX(text[0], 2000); //send ACK
       RX_init();
     }
 
@@ -105,7 +105,7 @@ void loop() {
       digitalWrite(buzzer_pin, 0);
       digitalWrite(blue_led_pin, 1);
       const char text[] = "3";
-      TX(text[0], 10000); //send ACK
+      TX(text[0], 2000); //send ACK
       RX_init();
     }
 
