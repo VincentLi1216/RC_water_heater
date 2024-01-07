@@ -18,13 +18,15 @@ void setup() {
     pinMode(buzzer_pin, OUTPUT);
     digitalWrite(blue_led_pin, 0);
     digitalWrite(buzzer_pin, 0);
+
+    Serial.begin(9600);
 }
 
 void loop() {
     if (radio.available()) {
         char text[32] = "";
         radio.read(&text, sizeof(text));
-        Serial.begin(9600);
+        
         Serial.println(text);
         if (strcmp(text, "1") == 0){
           Serial.println("On");

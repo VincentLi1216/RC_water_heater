@@ -22,6 +22,8 @@ void setup() {
     digitalWrite(led_pin, 1);
     delay(1000);
     digitalWrite(led_pin, 0);
+
+    Serial.begin(9600);
 }
 
 void loop() {
